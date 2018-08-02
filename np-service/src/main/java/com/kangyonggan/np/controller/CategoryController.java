@@ -1,6 +1,5 @@
 package com.kangyonggan.np.controller;
 
-import com.github.pagehelper.PageInfo;
 import com.kangyonggan.common.web.BaseController;
 import com.kangyonggan.np.model.Category;
 import com.kangyonggan.np.service.CategoryService;
@@ -31,9 +30,8 @@ public class CategoryController extends BaseController {
      * @return
      */
     @GetMapping
-    public PageInfo<Category> list(@RequestParam("type") String type) {
-        List<Category> categories = categoryService.findCategoriesByType(type);
-        return new PageInfo<>(categories);
+    public List<Category> list(@RequestParam("type") String type) {
+        return categoryService.findCategoriesByType(type);
     }
 
 }
