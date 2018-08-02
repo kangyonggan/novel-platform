@@ -1,7 +1,6 @@
 package com.kangyonggan.np.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.kangyonggan.common.Response;
 import com.kangyonggan.common.web.BaseController;
 import com.kangyonggan.np.model.Novel;
 import com.kangyonggan.np.service.NovelService;
@@ -31,14 +30,9 @@ public class NovelController extends BaseController {
      * @return
      */
     @GetMapping
-    public Response list() {
-        Response response = Response.getSuccessResponse();
-
+    public PageInfo<Novel> list() {
         List<Novel> novels = novelService.searchNovels(getRequestParams());
-        PageInfo pageInfo = new PageInfo<>(novels);
-
-        response.put("pageInfo", pageInfo);
-        return response;
+        return new PageInfo<>(novels);
     }
 
     /**
@@ -47,13 +41,9 @@ public class NovelController extends BaseController {
      * @param code
      * @return
      */
-    @GetMapping(value = "{code:[\\d]+}")
-    public Response detail(@PathVariable("code") Integer code) {
-        Response response = Response.getSuccessResponse();
-        Novel novel = novelService.findNovelByCode(code);
-
-        response.put("novel", novel);
-        return response;
+    @GetMapping("{code:[\\w]+}")
+    public Novel detail(@PathVariable("code") Integer code) {
+        return novelService.findNovelByCode(code);
     }
 
     /**
@@ -62,10 +52,10 @@ public class NovelController extends BaseController {
      * @param code
      * @return
      */
-    @PutMapping(value = "{code:[\\d]+}/pull")
-    public Response pull(@PathVariable("code") Integer code) {
+    @PutMapping(value = "{code:[\\w]+}/pull")
+    public boolean pull(@RequestParam("code") Integer code) {
         sectionService.updateSections(code);
-        return Response.getSuccessResponse();
+        return true;
     }
 
     /**
@@ -76,11 +66,11 @@ public class NovelController extends BaseController {
      * @return
      */
     @PutMapping(value = "{id:[\\d]+}/status/{status:\\b0\\b|\\b1\\b}")
-    public Response status(@PathVariable("id") Long id, @PathVariable("status") byte status) {
+    public boolean status(@PathVariable("id") Long id, @PathVariable("status") byte status) {
         Novel novel = new Novel();
         novel.setId(id);
         novel.setStatus(status);
         novelService.updateNovel(novel);
-        return Response.getSuccessResponse();
+        return true;
     }
 }

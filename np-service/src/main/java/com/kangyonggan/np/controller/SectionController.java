@@ -1,6 +1,5 @@
 package com.kangyonggan.np.controller;
 
-import com.kangyonggan.common.Response;
 import com.kangyonggan.common.web.BaseController;
 import com.kangyonggan.np.model.Section;
 import com.kangyonggan.np.service.SectionService;
@@ -29,12 +28,8 @@ public class SectionController extends BaseController {
      * @return
      */
     @GetMapping
-    public Response list() {
-        Response response = Response.getSuccessResponse();
-        List<Section> sections = sectionService.findNovelSections(getRequestParams());
-
-        response.put("list", sections);
-        return response;
+    public List<Section> list() {
+        return sectionService.findNovelSections(getRequestParams());
     }
 
     /**
@@ -43,13 +38,9 @@ public class SectionController extends BaseController {
      * @param code
      * @return
      */
-    @GetMapping(value = "{code:[\\d]+}")
-    public Response detail(@PathVariable("code") Integer code) {
-        Response response = Response.getSuccessResponse();
-        Section section = sectionService.findSectionByCode(code);
-
-        response.put("section", section);
-        return response;
+    @GetMapping(value = "{code:[\\w]+}")
+    public Section detail(@PathVariable("code") Integer code) {
+        return sectionService.findSectionByCode(code);
     }
 
     /**
@@ -58,13 +49,9 @@ public class SectionController extends BaseController {
      * @param code
      * @return
      */
-    @GetMapping(value = "{code:[\\d]+}/prev")
-    public Response prev(@PathVariable("code") Integer code) {
-        Response response = Response.getSuccessResponse();
-        Section section = sectionService.findPrevSectionByCode(code);
-
-        response.put("section", section);
-        return response;
+    @GetMapping(value = "{code:[\\w]+}/prev")
+    public Section prev(@PathVariable("code") Integer code) {
+        return sectionService.findPrevSectionByCode(code);
     }
 
     /**
@@ -73,13 +60,9 @@ public class SectionController extends BaseController {
      * @param code
      * @return
      */
-    @GetMapping(value = "{code:[\\d]+}/next")
-    public Response next(@PathVariable("code") Integer code) {
-        Response response = Response.getSuccessResponse();
-        Section section = sectionService.findNextSectionByCode(code);
-
-        response.put("section", section);
-        return response;
+    @GetMapping(value = "{code:[\\w]+}/next")
+    public Section next(@PathVariable("code") Integer code) {
+        return sectionService.findNextSectionByCode(code);
     }
 
 }
