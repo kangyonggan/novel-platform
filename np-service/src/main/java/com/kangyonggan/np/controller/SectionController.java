@@ -38,7 +38,7 @@ public class SectionController extends BaseController {
      * @param code
      * @return
      */
-    @GetMapping(value = "{code:[\\w]+}")
+    @GetMapping(value = "{code:[\\d]+}")
     public Section detail(@PathVariable("code") Integer code) {
         return sectionService.findSectionByCode(code);
     }
@@ -49,7 +49,7 @@ public class SectionController extends BaseController {
      * @param code
      * @return
      */
-    @GetMapping(value = "{code:[\\w]+}/prev")
+    @GetMapping(value = "{code:[\\d]+}/prev")
     public Section prev(@PathVariable("code") Integer code) {
         return sectionService.findPrevSectionByCode(code);
     }
@@ -60,7 +60,7 @@ public class SectionController extends BaseController {
      * @param code
      * @return
      */
-    @GetMapping(value = "{code:[\\w]+}/next")
+    @GetMapping(value = "{code:[\\d]+}/next")
     public Section next(@PathVariable("code") Integer code) {
         return sectionService.findNextSectionByCode(code);
     }

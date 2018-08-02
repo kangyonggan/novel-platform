@@ -41,7 +41,7 @@ public class NovelController extends BaseController {
      * @param code
      * @return
      */
-    @GetMapping("{code:[\\w]+}")
+    @GetMapping("{code:[\\d]+}")
     public Novel detail(@PathVariable("code") Integer code) {
         return novelService.findNovelByCode(code);
     }
@@ -52,8 +52,8 @@ public class NovelController extends BaseController {
      * @param code
      * @return
      */
-    @PutMapping(value = "{code:[\\w]+}/pull")
-    public boolean pull(@RequestParam("code") Integer code) {
+    @PutMapping(value = "{code:[\\d]+}/pull")
+    public boolean pull(@PathVariable("code") Integer code) {
         sectionService.updateSections(code);
         return true;
     }
